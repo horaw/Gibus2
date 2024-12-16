@@ -6,5 +6,5 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun Start(navController: NavHostController){
-    Text(text = "Notes App Screen")
+    Text(text = "Notes App text")
 }
