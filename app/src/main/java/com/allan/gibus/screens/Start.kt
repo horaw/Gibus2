@@ -1,5 +1,6 @@
 package com.allan.gibus.screens
 
+import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
@@ -7,15 +8,26 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.allan.gibus.MainViewModel
+import com.allan.gibus.MainViewModelFactory
 import com.allan.gibus.navigation.NavRoute
 import com.allan.gibus.ui.theme.GibusTheme
+import com.allan.gibus.utils.TYPE_FIREBASE
+import com.allan.gibus.utils.TYPE_ROOM
 
 @Composable
 fun StartScreen(navController: NavHostController){
+    //для корректной обработки кликов
+    val context = LocalContext.current
+    val mViewmodel: MainViewModel =
+        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
     Scaffold(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -27,7 +39,8 @@ fun StartScreen(navController: NavHostController){
             Text(text = "What will we use?")
             Button(
                 onClick = {
-                          navController.navigate(route = NavRoute.Main.route)
+                    mViewmodel.initDatabase(TYPE_ROOM)
+                    navController.navigate(route = NavRoute.Main.route)
                           },
                 modifier = Modifier
                     .width(200.dp)
@@ -38,6 +51,7 @@ fun StartScreen(navController: NavHostController){
             }
             Button(
                 onClick = {
+                    mViewmodel.initDatabase(TYPE_FIREBASE)
                     navController.navigate(route = NavRoute.Main.route)
                 },
                 modifier = Modifier
