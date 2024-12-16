@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.allan.gibus.database.room.dao.NoteRoomDao
 import com.allan.gibus.model.Note
+import com.allan.gibus.utils.Constants.Keys.NOTE_DATABASE
 
 @Database(entities = [Note::class], version = 1)
 abstract class AppRoomDatabase : RoomDatabase(){
@@ -21,7 +22,7 @@ abstract class AppRoomDatabase : RoomDatabase(){
                 INSTANCE = Room.databaseBuilder(
                     context,
                     AppRoomDatabase::class.java,
-                    "notes_database"
+                    NOTE_DATABASE
                 ).build()
                 INSTANCE as AppRoomDatabase
             }else INSTANCE as AppRoomDatabase
