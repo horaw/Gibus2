@@ -22,10 +22,10 @@ import com.allan.gibus.utils.TYPE_FIREBASE
 import com.allan.gibus.utils.TYPE_ROOM
 
 @Composable
-fun StartScreen(navController: NavHostController){
+fun StartScreen(navController: NavHostController, viewModel: MainViewModel){
     //для корректной обработки кликов
     val context = LocalContext.current
-    val mViewmodel: MainViewModel =
+    val mViewModel: MainViewModel =
         viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
 
     Scaffold(
@@ -39,7 +39,7 @@ fun StartScreen(navController: NavHostController){
             Text(text = "What will we use?")
             Button(
                 onClick = {
-                    mViewmodel.initDatabase(TYPE_ROOM){
+                    mViewModel.initDatabase(TYPE_ROOM){
                         navController.navigate(route = NavRoute.Main.route)
                     }
 
@@ -53,7 +53,7 @@ fun StartScreen(navController: NavHostController){
             }
             Button(
                 onClick = {
-                    mViewmodel.initDatabase(TYPE_FIREBASE){
+                    mViewModel.initDatabase(TYPE_FIREBASE){
                         navController.navigate(route = NavRoute.Main.route)
                     }
 
@@ -73,7 +73,10 @@ fun StartScreen(navController: NavHostController){
 @Composable
 fun prevStartScreen(){
     GibusTheme{
-        StartScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+        StartScreen(navController = rememberNavController(), viewModel = mViewModel)
 
     }
 }
