@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "828596724063",
+    "project_id": "notes-app-e121b",
+    "storage_bucket": "notes-app-e121b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828596724063:android:af9a67b7b1aa46bfcf56ea",
+        "android_client_info": {
+          "package_name": "com.allan.gibus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPK8Ld0cksZKzX35JHQmN2tnMpVIdKbYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
