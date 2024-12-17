@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.allan.gibus.database.firebase.AppFirebaseRepository
 import com.allan.gibus.database.room.AppRoomDatabase
 import com.allan.gibus.database.room.repository.RoomRepository
 import com.allan.gibus.model.Note
@@ -25,6 +26,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE ->{
+                REPOSITORY = AppFirebaseRepository()
+                REPOSITORY.connectToDatabase(
+                    { onSuccess()},
+                    {Log.d("checkData", "Error: ${it}")}
+
+                )
             }
         }
     }
