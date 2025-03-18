@@ -2,20 +2,22 @@ package com.allan.gibus.screens
 
 import android.app.Application
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,8 +32,15 @@ import com.allan.gibus.navigation.NavRoute
 import com.allan.gibus.ui.theme.GibusTheme
 
 @Composable
-fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
-    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
+fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
+    val allNotes = viewModel.readAllNotes().observeAsState(listOf()).value
+    var searchQuery by remember { mutableStateOf("") }
+
+    val filteredNotes = allNotes.filter { note ->
+        note.title.contains(searchQuery, ignoreCase = true) ||
+                note.subtitle.contains(searchQuery, ignoreCase = true)
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -42,19 +51,47 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
             }
         }
     ) {
+        Column {
+            SearchBar(searchQuery) { query -> searchQuery = query }
 
-        LazyColumn{
-            items(notes) { note ->
-                NoteItem(note = note, navController = navController)
+            LazyColumn {
+                items(filteredNotes) { note ->
+                    NoteItem(note = note, navController = navController)
+                }
             }
-       }
-
+        }
     }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        label = { Text("Поиск") },
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(onClick = {
+                    onQueryChange("")
+                    keyboardController?.hide()
+                }) {
+                    Icon(Icons.Default.Close, contentDescription = "Clear")
+                }
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    )
 }
 
 
 @Composable
-fun NoteItem(note: Note, navController: NavHostController){
+fun NoteItem(note: Note, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,8 +117,8 @@ fun NoteItem(note: Note, navController: NavHostController){
 
 @Preview(showBackground = true)
 @Composable
-fun prevMainScreen(){
-    GibusTheme{
+fun prevMainScreen() {
+    GibusTheme {
         val context = LocalContext.current
         val mViewModel: MainViewModel =
             viewModel(factory = MainViewModelFactory(context.applicationContext as Application))

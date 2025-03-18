@@ -84,7 +84,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel){
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "What will we use?")
+                Text(text = "Что мы будем использовать?")
                 Button(
                     onClick = {
                         viewModel.initDatabase(TYPE_ROOM){
@@ -96,7 +96,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel){
                         .width(200.dp)
                         .padding(vertical = 8.dp)
                 ) {
-                    Text(text = "Room database")
+                    Text(text = "Room база данных")
 
                 }
                 Button(
@@ -110,7 +110,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel){
                         .width(200.dp)
                         .padding(vertical = 8.dp)
                 ) {
-                    Text(text = "Firebase database")
+                    Text(text = "Firebase база данных")
 
                 }
             }

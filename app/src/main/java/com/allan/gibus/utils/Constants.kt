@@ -17,7 +17,7 @@ object Constants{
         const val NOTES_TABLE = "notes_table"
         const val ID ="id"
         const val NONE = "none"
-        const val FIREBASE_DATABASE = "Firebase database"
+        const val FIREBASE_DATABASE = "Firebase база данных"
         const val UPDATE = "UPDATE"
         const val DELETE = "DELETE"
         const val NAV_BACK = "NAV_BACK"
@@ -26,10 +26,10 @@ object Constants{
         const val TITLE = "Title"
         const val SUBTITLE = "Subtitle"
         const val UPDATE_NOTE = "Update note"
-        const val SIGN_IN = "Sign in"
-        const val LOG_IN = "Log in"
-        const val LOGIN_TEXT = "Login"
-        const val PASSWORD_TEXT = "Password"
+        const val SIGN_IN = "Войти"
+        const val LOG_IN = "Вход"
+        const val LOGIN_TEXT = "Логин"
+        const val PASSWORD_TEXT = "Пароль"
 
     }
     object  Screens{

@@ -16,7 +16,6 @@ sealed class NavRoute(val route: String){
 }
 
 
-
 @Composable
 fun NotesNavHost(mViewModel: MainViewModel) {
     val navController = rememberNavController()
