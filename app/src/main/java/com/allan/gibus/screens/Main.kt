@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -34,7 +35,7 @@ import com.allan.gibus.ui.theme.GibusTheme
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: MainViewModel) {
     val allNotes = viewModel.readAllNotes().observeAsState(listOf()).value
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
 
     val filteredNotes = allNotes.filter { note ->
         note.title.contains(searchQuery, ignoreCase = true) ||
